@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Formulario de Inscripción</title>
+    </h:head>
+    <h:body>
+        <ui:include src="menu.xhtml" />
+
+        <p:card style="margin:5% 5% 5% 5%">
+            <f:facet name="title">
+                Formulario de Inscripción
+            </f:facet>
+            <f:view>
+                <h:form id="inscripcionForm">
+                    <p:panelGrid columns="12" style="width: 100%">
+                        <p:outputLabel for="alumno" value="Buscar Alumno:" />
+                        <p:autoComplete id="alumno" value="#{inscripcionController.inscripcion.alumno}" 
+                                        completeMethod="#{inscripcionController.completeAlumno}" var="alumno" 
+                                        itemLabel="#{alumno.nombre}" itemValue="#{alumno}" 
+                                        converter="alumnoConverter">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="1">
+                                    <h:outputText value="#{alumno.nombre}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+
+                        <p:outputLabel for="materia" value="Buscar Materia:" />
+                        <p:autoComplete id="materia" value="#{inscripcionController.inscripcion.materia}" 
+                                        completeMethod="#{inscripcionController.completeMateria}"
+                                        var="materia" itemLabel="#{materia.nombre}" itemValue="#{materia}" 
+                                        converter="materiaConverter">
+                            <f:facet name="itemtip">
+                                <h:panelGrid columns="1">
+                                    <h:outputText value="#{materia.nombre}" />
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:autoComplete>
+
+                        <p:outputLabel for="año" value="Año:" />
+                        <p:inputText id="año" value="#{inscripcionController.inscripcion.año}" />
+
+                        <p:outputLabel for="ciclo" value="Ciclo:" />
+                        <p:inputText id="ciclo" value="#{inscripcionController.inscripcion.ciclo}" />
+
+                        <h:inputHidden id="fecha" value="#{inscripcionController.inscripcion.fechaInscripcion}" />
+                    </p:panelGrid>
+                    <p:panelGrid columns="4" layout="grid"> 
+                        <p:commandButton value="Guardar" actionListener="#{inscripcionController.guardarInscripcion}" 
+                                         update="tablaInscripciones inscripcionForm" />
+                    </p:panelGrid>
+                </h:form>
+            </f:view>
+
+            <f:view>
+                <h1>Listado de Inscripciones</h1> 
+                <h:form id="tablaInscripciones">
+                    <p:dataTable lazy="false"  rows="5" paginator="true" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                 rowsPerPageTemplate="5,10,{ShowAll|'All'}"
+                                 value="#{inscripcionController.inscripcionesList}" var="inscripcion">
+                        <p:column>
+                            <f:facet name="header">ID</f:facet>
+                            <h:outputText value="#{inscripcion.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Alumno</f:facet>
+                            <h:outputText value="#{inscripcion.alumno.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Materia</f:facet>
+                            <h:outputText value="#{inscripcion.materia.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Ciclo</f:facet>
+                            <h:outputText value="#{inscripcion.ciclo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Año</f:facet>
+                            <h:outputText value="#{inscripcion.año}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Fecha</f:facet>
+                            <h:outputText value="#{inscripcion.fechaInscripcion}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </f:view>
+        </p:card>
+
+    </h:body>
+</html>

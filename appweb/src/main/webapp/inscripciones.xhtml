@@ -18,12 +18,15 @@
             </f:facet>
             <f:view>
                 <h:form id="inscripcionForm">
+                    <!-- Campo oculto para almacenar el ID del alumno -->
+                    <h:inputHidden id="idAlumno" value="#{inscripcionController.inscripcion.alumno.id}" />
+
                     <p:panelGrid columns="12" style="width: 100%">
                         <p:outputLabel for="alumno" value="Buscar Alumno:" />
                         <p:autoComplete id="alumno" value="#{inscripcionController.inscripcion.alumno}" 
                                         completeMethod="#{inscripcionController.completeAlumno}" var="alumno" 
-                                        itemLabel="#{alumno.nombre}" itemValue="#{alumno}" 
-                                        converter="alumnoConverter">
+                                        itemLabel="#{alumno.nombre}" itemValue="#{alumno}"
+                                        onchange="document.getElementById('inscripcionForm:idAlumno').value = this.value.id">
                             <f:facet name="itemtip">
                                 <h:panelGrid columns="1">
                                     <h:outputText value="#{alumno.nombre}" />
@@ -34,8 +37,7 @@
                         <p:outputLabel for="materia" value="Buscar Materia:" />
                         <p:autoComplete id="materia" value="#{inscripcionController.inscripcion.materia}" 
                                         completeMethod="#{inscripcionController.completeMateria}"
-                                        var="materia" itemLabel="#{materia.nombre}" itemValue="#{materia}" 
-                                        converter="materiaConverter">
+                                        var="materia" itemLabel="#{materia.nombre}" itemValue="#{materia}">
                             <f:facet name="itemtip">
                                 <h:panelGrid columns="1">
                                     <h:outputText value="#{materia.nombre}" />

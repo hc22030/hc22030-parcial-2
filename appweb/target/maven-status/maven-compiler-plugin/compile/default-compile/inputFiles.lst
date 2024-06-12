@@ -1,0 +1,12 @@
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/entidades/Inscripcion.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/negocio/InscripcionService.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/entidades/Materia.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/entidades/Alumno.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/controladores/IndexController.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/negocio/MateriaService.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/resources/MateriaRecurso.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/negocio/DataService.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/resources/App.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/controladores/InscripcionController.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/resources/Recurso.java
+/home/elizabeth/NetBeansProjects/appweb/src/main/java/libcode/webapp/controladores/MateriaController.java

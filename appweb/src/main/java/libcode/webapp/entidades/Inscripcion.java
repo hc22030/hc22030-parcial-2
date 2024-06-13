@@ -29,8 +29,8 @@ public class Inscripcion implements Serializable {
     @Column(name = "ciclo", nullable = false)
     private String ciclo;
 
-    @Column(name = "año", nullable = false)
-    private int año;
+    @Column(name = "anio", nullable = false)
+    private int anio;
 
     @Column(name = "fechainscripcion", nullable = false)
     private LocalDate fechaInscripcion;
@@ -68,12 +68,12 @@ public class Inscripcion implements Serializable {
         this.ciclo = ciclo;
     }
 
-    public int getAño() {
-        return año;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setAño(int año) {
-        this.año = año;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     public LocalDate getFechaInscripcion() {
@@ -108,30 +108,30 @@ public class Inscripcion implements Serializable {
 
     @Override
     public String toString() {
-        return "Inscripcion{" + "id=" + id + ", alumno=" + alumno + ", materia=" + materia + ", ciclo=" + ciclo + ", año=" + año + ", fechainscripcion=" + fechaInscripcion + "}";
+        return "Inscripcion{" + "id=" + id + ", alumno=" + alumno + ", materia=" + materia + ", ciclo=" + ciclo + ", anio=" + anio + ", fechainscripcion=" + fechaInscripcion + "}";
     }
 
     public Inscripcion(Integer id) {
         this.id = id;
     }
 
-    public Inscripcion(Integer id, Alumno alumno, Materia materia, String ciclo, int año, LocalDate fechainscripcion) {
+    public Inscripcion(Integer id, Alumno alumno, Materia materia, String ciclo, int anio, LocalDate fechainscripcion) {
         this.id = id;
         this.alumno = alumno;
         this.materia = materia;
         this.ciclo = ciclo;
-        this.año = año;
+        this.anio = anio;
         this.fechaInscripcion = fechainscripcion;
     }
 
     public Inscripcion() {
     }
 
-    public Inscripcion(Alumno alumno, Materia materia, String ciclo, int año, LocalDate fechainscripcion) {
+    public Inscripcion(Alumno alumno, Materia materia, String ciclo, int anio, LocalDate fechainscripcion) {
         this.alumno = alumno;
         this.materia = materia;
         this.ciclo = ciclo;
-        this.año = año;
+        this.anio = anio;
         this.fechaInscripcion = fechainscripcion;
     }
 

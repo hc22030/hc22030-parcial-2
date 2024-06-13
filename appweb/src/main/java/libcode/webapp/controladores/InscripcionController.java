@@ -76,7 +76,7 @@ public class InscripcionController implements Serializable {
         this.inscripcion.setAlumno(inscripcion.getAlumno());
         this.inscripcion.setMateria(inscripcion.getMateria());
         this.inscripcion.setCiclo(inscripcion.getCiclo());
-        this.inscripcion.setAño(inscripcion.getAño());
+        this.inscripcion.setAnio(inscripcion.getAnio());
         this.inscripcion.setFechaInscripcion(inscripcion.getFechaInscripcion());
     }
 

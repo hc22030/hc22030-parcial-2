@@ -1,10 +1,11 @@
+package libcode.webapp.controladores;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import libcode.webapp.entidades.Alumno;
 import libcode.webapp.entidades.Inscripcion;
 import libcode.webapp.entidades.Materia;
@@ -12,15 +13,20 @@ import libcode.webapp.negocio.DataService;
 import libcode.webapp.negocio.InscripcionService;
 import libcode.webapp.negocio.MateriaService;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Named
 @RequestScoped
-public class InscripcionController {
+public class InscripcionController implements Serializable{
 
     private List<Inscripcion> inscripcionesList;
     private List<Alumno> alumnos;
     private List<Materia> materias;
-    
-    private Inscripcion inscripcion = new Inscripcion();
+
+    private Inscripcion inscripcion;
 
     @EJB
     InscripcionService inscripcionService;
@@ -32,24 +38,45 @@ public class InscripcionController {
     MateriaService materiaService;
 
     @PostConstruct
+    public void init() {
+        inscripcion = new Inscripcion();
+        inscripcion.setAlumno(new Alumno());
+        inscripcion.setMateria(new Materia()); // Asegurando que alumno no sea nulo
+
+        cargarDatos();
+    }
+
     public void cargarDatos() {
         inscripcionesList = inscripcionService.getAllInscripciones();
         alumnos = dataService.getAlumnos();
         materias = materiaService.getMaterias();
     }
-    
+
     public void guardarInscripcion() {
-        inscripcion.setFechaInscripcion(LocalDate.now());
-        
-        if (inscripcion.getId() != null) {
-            inscripcionService.editarInscripcion(inscripcion);
-        } else {
+        try {
+            // Configurar fecha de inscripción
+            inscripcion.setFechaInscripcion(LocalDate.now());
+
+            // Guardar inscripción
             inscripcionService.guardarInscripcion(inscripcion);
+
+            // Reiniciar campos después de guardar
+            inscripcion = new Inscripcion();
+            inscripcion.setAlumno(new Alumno());
+            inscripcion.setMateria(new Materia());
+
+            // Recargar los datos después de guardar
+            cargarDatos();
+
+            // Mostrar mensaje de éxito
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "La inscripción se guardó correctamente."));
+        } catch (Exception e) {
+            // Manejar cualquier excepción y mostrar un mensaje de error
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar la inscripción. Error: " + e.getMessage()));
+            e.printStackTrace();
         }
-        inscripcion = new Inscripcion();
-        cargarDatos();
     }
-    
+
     public void llenarFormEditar(Inscripcion inscripcion) {
         this.inscripcion.setId(inscripcion.getId());
         this.inscripcion.setAlumno(inscripcion.getAlumno());
@@ -58,13 +85,12 @@ public class InscripcionController {
         this.inscripcion.setAño(inscripcion.getAño());
         this.inscripcion.setFechaInscripcion(inscripcion.getFechaInscripcion());
     }
-    
+
     public void eliminarInscripcion(Inscripcion inscripcion) {
         inscripcionService.eliminarInscripcion(inscripcion);
         cargarDatos();
     }
-    
-  
+
     public List<Alumno> completeAlumno(String query) {
         List<Alumno> filteredAlumnos = new ArrayList<>();
         for (Alumno alumno : alumnos) {
@@ -84,7 +110,7 @@ public class InscripcionController {
         }
         return filteredMaterias;
     }
-    
+
     // Getters y setters
     public List<Inscripcion> getInscripcionesList() {
         return inscripcionesList;
@@ -93,7 +119,7 @@ public class InscripcionController {
     public void setInscripcionesList(List<Inscripcion> inscripcionesList) {
         this.inscripcionesList = inscripcionesList;
     }
-    
+
     public List<Alumno> getAlumnos() {
         return alumnos;
     }

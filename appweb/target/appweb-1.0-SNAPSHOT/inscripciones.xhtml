@@ -10,23 +10,23 @@
         <title>Formulario de Inscripción</title>
     </h:head>
     <h:body>
+        <!-- Include menu -->
         <ui:include src="menu.xhtml" />
 
+        <!-- Card for Inscription Form -->
         <p:card style="margin:5% 5% 5% 5%">
             <f:facet name="title">
                 Formulario de Inscripción
             </f:facet>
             <f:view>
                 <h:form id="inscripcionForm">
-                    <!-- Campo oculto para almacenar el ID del alumno -->
                     <h:inputHidden id="idAlumno" value="#{inscripcionController.inscripcion.alumno.id}" />
 
-                    <p:panelGrid columns="12" style="width: 100%">
+                    <p:panelGrid columns="4" layout="grid">
                         <p:outputLabel for="alumno" value="Buscar Alumno:" />
                         <p:autoComplete id="alumno" value="#{inscripcionController.inscripcion.alumno}" 
                                         completeMethod="#{inscripcionController.completeAlumno}" var="alumno" 
-                                        itemLabel="#{alumno.nombre}" itemValue="#{alumno}"
-                                        onchange="document.getElementById('inscripcionForm:idAlumno').value = this.value.id">
+                                        itemLabel="#{alumno.nombre}" itemValue="#{alumno}" converter="alumnoConverter">
                             <f:facet name="itemtip">
                                 <h:panelGrid columns="1">
                                     <h:outputText value="#{alumno.nombre}" />
@@ -37,7 +37,7 @@
                         <p:outputLabel for="materia" value="Buscar Materia:" />
                         <p:autoComplete id="materia" value="#{inscripcionController.inscripcion.materia}" 
                                         completeMethod="#{inscripcionController.completeMateria}"
-                                        var="materia" itemLabel="#{materia.nombre}" itemValue="#{materia}">
+                                        var="materia" itemLabel="#{materia.nombre}" itemValue="#{materia}" converter="materiaConverter">
                             <f:facet name="itemtip">
                                 <h:panelGrid columns="1">
                                     <h:outputText value="#{materia.nombre}" />
@@ -50,54 +50,53 @@
 
                         <p:outputLabel for="ciclo" value="Ciclo:" />
                         <p:inputText id="ciclo" value="#{inscripcionController.inscripcion.ciclo}" />
-
-                        <h:inputHidden id="fecha" value="#{inscripcionController.inscripcion.fechaInscripcion}" />
                     </p:panelGrid>
+
                     <p:panelGrid columns="4" layout="grid"> 
                         <p:commandButton value="Guardar" actionListener="#{inscripcionController.guardarInscripcion}" 
-                                         update="tablaInscripciones inscripcionForm" />
+                                         update=":inscripcionForm tablaInscripciones" />
                     </p:panelGrid>
-                </h:form>
-            </f:view>
-
-            <f:view>
-                <h1>Listado de Inscripciones</h1> 
-                <h:form id="tablaInscripciones">
-                    <p:dataTable lazy="false"  rows="5" paginator="true" paginatorPosition="bottom"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                                 rowsPerPageTemplate="5,10,{ShowAll|'All'}"
-                                 value="#{inscripcionController.inscripcionesList}" var="inscripcion">
-                        <p:column>
-                            <f:facet name="header">ID</f:facet>
-                            <h:outputText value="#{inscripcion.id}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Alumno</f:facet>
-                            <h:outputText value="#{inscripcion.alumno.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Materia</f:facet>
-                            <h:outputText value="#{inscripcion.materia.nombre}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Ciclo</f:facet>
-                            <h:outputText value="#{inscripcion.ciclo}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Año</f:facet>
-                            <h:outputText value="#{inscripcion.año}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">Fecha</f:facet>
-                            <h:outputText value="#{inscripcion.fechaInscripcion}">
-                                <f:convertDateTime pattern="dd/MM/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                    </p:dataTable>
                 </h:form>
             </f:view>
         </p:card>
 
+        <!-- Card for Inscription List -->
+        <p:card style="margin:5% 5% 5% 5%">
+            <h1> Listado de Alumnos </h1>
+            <h:form id="tablaInscripciones">
+                <p:dataTable rows="5" paginator="true" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,{ShowAll|'All'}"                            
+                             value="#{inscripcionController.inscripcionesList}" var="inscripcion">
+                    <!-- Columns for Inscription Data -->
+                    <p:column>
+                        <f:facet name="header">ID</f:facet>
+                        <h:outputText value="#{inscripcion.id}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Alumno</f:facet>
+                        <h:outputText value="#{inscripcion.alumno.nombre}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Materia</f:facet>
+                        <h:outputText value="#{inscripcion.materia.nombre}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Ciclo</f:facet>
+                        <h:outputText value="#{inscripcion.ciclo}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Año</f:facet>
+                        <h:outputText value="#{inscripcion.año}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">Fecha</f:facet>
+                        <h:outputText value="#{inscripcion.fechaInscripcion}">
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:card>
     </h:body>
 </html>

@@ -3,7 +3,11 @@ package libcode.webapp.entidades;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Objects;
+import java.util.List;
+
 
 @Entity
 @Table(name = "inscripciones")
@@ -130,4 +134,5 @@ public class Inscripcion implements Serializable {
         this.año = año;
         this.fechaInscripcion = fechainscripcion;
     }
+
 }

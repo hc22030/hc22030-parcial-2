@@ -9,7 +9,6 @@ import java.util.List;
 import libcode.webapp.entidades.Alumno;
 
 @Stateless
-
 public class DataService {
 
     @PersistenceContext(unitName = "pu")
@@ -36,4 +35,5 @@ public class DataService {
         Alumno alumnoEliminar = entityManager.find(Alumno.class, alumno.getId());
         entityManager.remove(alumnoEliminar);
     }
+
 }

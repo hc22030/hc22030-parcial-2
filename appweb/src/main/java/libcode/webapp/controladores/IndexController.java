@@ -49,7 +49,6 @@ public class IndexController {
         cargarAlumnos();
     }
     
-    // Getters y Setters
     
     public List<Alumno> getAlumnosList() {
         return alumnosList;
